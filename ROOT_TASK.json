@@ -7,7 +7,7 @@
   "track": "T04",
   "framework": "vllm",
   "precision": "bf16",
-  "source_task_status": "short_wav_transcription_verified_with_explicit_tf55_config_compat",
+  "source_task_status": "isolated_prepare_publisher_wav_long_and_fullfile_sse_verified_formal_pending",
   "formal_ready": false,
   "submitted": false,
   "repository_url": null,
