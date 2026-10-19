@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "primary_task": "qwen3-asr-bw-vllm",
+  "canonical_task": "tasks/qwen3-asr-bw-vllm/task.json",
+  "canonical_report": "tasks/qwen3-asr-bw-vllm/README.md",
+  "model": "Qwen/Qwen3-ASR-1.7B",
+  "track": "T04",
+  "framework": "vllm",
+  "precision": "bf16",
+  "source_task_status": "short_wav_transcription_verified_with_explicit_tf55_config_compat",
+  "formal_ready": false,
+  "submitted": false,
+  "repository_url": null,
+  "image_reference": null,
+  "shared_task_sources_are_other_submission_targets": false,
+  "notes": "Source/evidence snapshot only. No weights, model download, GPU run, git initialization, publication or official acceptance generated."
+}
