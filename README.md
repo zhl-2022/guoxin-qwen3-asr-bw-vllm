@@ -1,122 +1,81 @@
-# Qwen3-ASR-1.7B × BW × vLLM × BF16
-
-本仓库唯一目标题为 `qwen3-asr-bw-vllm`。当前为开发交付目录，正式就绪和赛事提交均未确认；详见 [ROOT_TASK.json](ROOT_TASK.json)。`tasks/` 内其余两题仅保留为共享开发源码和测试依赖，不作为本仓库提交目标。完整原报告保留于 [canonical README](tasks/qwen3-asr-bw-vllm/README.md)。
+# Qwen3-ASR-1.7B on BW + vLLM（session004 实测报告）
 
 ## 1. 简介
 
-本目录适配原始 `Qwen/Qwen3-ASR-1.7B` checkpoint，属于 T04。2026-10-20 的 session003 已在另一 BW 单卡实例新建任务隔离 venv、安装锁定依赖，并完成发布方中英示例派生的三条 WAV 转写和整文件上传后的 SSE 输出；任务服务随后停止并通过进程/端口清理核验。长样本为 39.260375 秒人工中英拼接，不能称自然连续长语音。正式 WER/CER、性能、最终交付镜像的干净环境验收仍未完成，`formal_ready=false`。完整结果见 [session003 ASR 实证报告](docs/session003-asr-results.md)。
+原始 `Qwen/Qwen3-ASR-1.7B` checkpoint 已在本轮 BW + native vLLM 完成新的隔离音频环境准备、中文/英文短 WAV 转写与整文件上传后 SSE 输出验证。本报告已读取 session004 原件；功能验证成立，正式 WER/CER、音频性能方法和最终镜像验收仍未完成。`formal_ready=false`、`official_accuracy=false`、`submitted=false`。
 
-2026-10-19 的两条自有文本合成音转写历史仍保留：中文 8.395 秒、英文 6.17 秒，返回与本地原稿一致，参考原稿没有发送给模型。本轮发布方音频没有已核验人工参考，未沿用模型返回作为答案或计算 WER/CER。
+权重：[发布方模型](https://huggingface.co/Qwen/Qwen3-ASR-1.7B)。历史私有仓库：[光合](https://developer.sourcefind.cn/codes/ghu_30ebea88e/guoxin-qwen3-asr-bw-vllm)、[GitHub](https://github.com/zhl-2022/guoxin-qwen3-asr-bw-vllm)；session004 的新 commit、同步与评审权限尚需最终核对。
 
-原始 `asr-preflight-001.json` 的 tokenizer.json 缺失失败原样保留；后续 `asr-preflight-002.json` 已按实际 legacy BPE 布局校验通过：vocab.json、merges.txt、tokenizer_config.json，无需伪造 tokenizer.json。两权重分片的 SHA256 与发布方 revision `7278e1e70fe206f11671096ffdd38061171dd6e5` 一致，共 708 个 BF16 张量、4,698,434,816 字节 payload。模型名称中的 1.7B 不代表全模型参数数，API 统计为 2,349,217,408 个 BF16 参数。
-
-上游入口：[模型卡](https://huggingface.co/Qwen/Qwen3-ASR-1.7B)、[vLLM v0.18.1 ASR 实现](https://github.com/vllm-project/vllm/blob/v0.18.1/vllm/model_executor/models/qwen3_asr.py)。光合已有同类部署与配置初始化顺序修复，应引用已有工作，不能把该修复视为本项目独创；公开材料的逐项核查见根目录 [提交就绪核查](docs/submission-readiness-audit-20261020.md)。
+本轮依据 [remote-intermediate-001 导出 manifest](evidence/session004/remote-intermediate-001/export-manifest.json)，其 SHA256 为 `2b1543b7bb12c95f3a0aa041e8e3db605f6189921f2819316c5fcfc7ea86ecb2`。manifest 封存 payload 大小/SHA/CRC，以及实际执行脚本前后 SHA；原件只读，未把旧 session003 的长音频结果算成本轮新增实验。
 
 ## 2. 验证环境
 
-| 项目 | 已观察结果 |
+<!-- session004-platform-closure -->
+
+本轮已独立核对[SCNet 平台关机与余额记录](evidence/platform-checkpoint-20261023-004.json)：A/B 两个本轮实例及旧参考实例均为“已关机”；A 手动关机并选择保存环境，B 按预定时限自动关机。可见余额为 **488.0238888888 卡时**，与开机前可见余额差 4.6686111111 卡时；余额差可能包含延迟结算，不当作最终账单。资源为华中一区 A 区 113 组、BW64GB×1、CPU15核、内存59GB。账户镜像 ID `2071293281204580354` / version `2082674417745739777`，Notebook 可选择标签 `jupyter-vllm018-ubuntu22.04-dtk26.04-qwen3.6-20260423`；完整实际 registry/repo:tag 和评审获取方式尚缺，digest 仅为可复现补充项。平台配置不替代任务原始环境/驱动实测。
+
+本轮代码仓库目标：[zhl-2022/guoxin-qwen3-asr-bw-vllm 的 codex/session004 分支](https://github.com/zhl-2022/guoxin-qwen3-asr-bw-vllm/tree/codex/session004)。仓库保持私有；实际推送 commit 和逐文件回读以独立交付回执为准，评审权限仍须落实。光合既有三仓库的 session003 与本轮 GitHub 分支分别记录，不假称光合已同步新版。
+
+| 项目 | 本轮实证或明确缺口 |
 |---|---|
-| 平台 | SCNet 华中一区【A区】，`113 / hx1hgbwnormal`，BW × 1，`gfx936:sramecc+:xnack-` |
-| 基础镜像展示名 | `jupyter-vllm018-ubuntu22.04-dtk26.04-qwen3.6-20260423`；完整 registry/repo:tag 尚未取得，不能用展示名代替 |
-| 原生 Torch | `2.10.0+das.opt1.dtk2604.20260325.g6b060a` |
-| 原生 vLLM / HCU | `0.18.1+das.fa71803.dtk2604` / `0.18.1+das.dtk2604` |
-| Transformers / NumPy / SciPy | `5.5.0` / `1.25.0` / `1.15.3` |
-| 模型实际目录 | `/root/private_data/SothisAI/model/Aihub/Qwen3-ASR-1.7B/main/Qwen3-ASR-1.7B` |
-| 模型配置 SHA256 | `2e74a751548b8ad7d7526d29365ad8144c345d8b412b1152d25dc6698452712f` |
-| 实际服务 | `127.0.0.1:30002`，`qwen3-asr-1.7b`，BF16、TP=1、MAX_LEN=32768、显存比例 0.85、eager、max-num-seqs=4 |
-| 静态文本位置上限 | 嵌套 `thinker_config.text_config.max_position_embeddings=65536`；32768 已初始化，长音频尚未验证 |
+| 平台 | SCNet BW 单卡；根代理 UI 报告实例 B 为 `2112237945233408001`、华中一区 A 区；该平台映射与进程原件的证据来源分开保留 |
+| 原生依赖 | prepare 原件列 Torch `2.10.0+das.opt1.dtk2604.20260325.g6b060a`、vLLM `0.18.1+das.fa71803.dtk2604`、HCU `0.18.1+das.dtk2604`、Transformers `5.5.0`；受保护包均来自 `/usr/local/lib/python3.10/dist-packages` |
+| 服务解释器 | project 下 `tasks/qwen3-asr-bw-vllm/runtime/audio-venv/bin/python`，新建 system-site-packages venv |
+| 模型与服务 | `/root/private_data/SothisAI/model/Aihub/Qwen3-ASR-1.7B/main/Qwen3-ASR-1.7B`；`qwen3-asr-1.7b`；`127.0.0.1:30002` |
+| 实际配置 | BF16、TP1、32768 上下文、显存比例 0.85、eager、max-num-seqs4；加载预算600秒、总服务预算900秒 |
+| 镜像 | 展示名 `jupyter-vllm018-ubuntu22.04-dtk26.04-qwen3.6-20260423`；实际完整 registry/repo:tag、获取方式及最终镜像干净复跑仍缺，不用公开同名 base 镜像冒充 |
 
-当前 native ASR 路径使用 librosa + soundfile，不要求为短 PCM WAV 安装 torchaudio / ffmpeg / PyAV。session003 的新任务 venv 实际安装了 7 个锁定 CPU 包，12 个受保护原生包的版本与路径与 native-before 完全一致，WAV 解码、重采样和音频依赖闭包检查通过，见 [prepare 结果](evidence/asr-clean-prepare-003.json)、[安装记录](evidence/asr-audio-pip-install-003.log)和[原生前状态](evidence/asr-native-before-003.json)。历史 002 的准备记录没有改写。
-
-`native-stack.json` 固定实际原生版本；`requirements-extra.txt` 固定审核过的 7 个官方 PyPI wheel URL 与 SHA256。不安装 `qwen-asr[vllm]`，其 extra 会引入另一套框架版本，也不切换到 `-hf` 模型变体。
+实际配置见 [config](evidence/session004/remote-intermediate-001/project/tasks/qwen3-asr-bw-vllm/runtime/config-1a02b2e4e0c944cabdb195dd54dc8348.json)。本轮未生成单独 env.log，不把历史 Python/设备详细 probe 改标为本次采集；包身份来自本轮 prepare 原件，GPU engine 状态来自 server.log。
 
 ## 3. 适配优化方案
 
-当前 Transformers 5.5 在父类初始化期间提前读取 thinker 子配置，原生 ASR 类在之后才设置该字段，因此原始启动失败。项目局部 `vllm.general_plugins` 插件仅提前构造同值 child，再执行完整原生构造函数；不会关闭 token-ID 校验、替换权重、改 tokenizer 或改 site-packages。插件同时校验 Transformers 版本和原生 ASR 配置源码 SHA256；发生漂移时停止并要求复核。父进程及 EngineCore 的实际安装事件保存在第二轮服务日志。
+局部 `vllm.general_plugins` 插件在 Transformers5.5 父类读取 thinker 前构造同值 child，再运行原始初始化和 token-ID 校验。未修改权重/tokenizer 或关闭验证。实际插件 SHA 为 `84d0d5402c73d21562fb12bb649ace56d6f29b7d1fdf1d3e402b8d4a6e28820a`；[server.log](evidence/session004/remote-intermediate-001/project/tasks/qwen3-asr-bw-vllm/runtime/server.log) 保存 API 父进程与 EngineCore 两次安装事件，目标配置源码 SHA 为 `56fd1f1ea939dff47533b052962d294375e85482ed310e48ccad402cf5699818`。保留公开同类工作的引用，不把初始化顺序修复宣称为从零独创。
 
-`run.sh` 现在统一启用已验证插件；`run_compat.sh` 为兼容别名。第一轮默认入口的失败日志仍保留，入口改变不表示旧失败已经通过。003 实际执行的监督器身份与原始快照已保留；后续增加显式 run ID 和清理校验的控制补丁仅完成 CPU 回归，见 [控制补丁记录](evidence/rules/session003-run-identity-cpu-004.json)。后续若官方镜像修复原生类，需要复核并更新配置，不自动绕过源码保护。
+本轮 [prepare 启动输出](evidence/session004/remote-intermediate-001/project/evidence/session004/asr-start-002.log) 与归档 `asr-prepare-evidence` 确认七个锁定 CPU wheel 安装成功，12 个 protected native 包的版本/位置在 native-before 与 ready 逐项相等；WAV 解码及重采样检查通过。prepare 自身 `model_loaded=false/gpu_checked=false/service_started=false` 仅界定准备阶段；随后真实 serving 已另有 ready 和请求证据。最初错误选择 `/usr/bin/python` 为任务 venv 的失败见 [asr-start.log](evidence/session004/remote-intermediate-001/project/evidence/session004/asr-start.log)，保留原文，不重写成成功。
 
-## 4. 环境准备与显式启动
+## 4. 服务启动脚本
 
-两步独立执行，准备步骤不会启动服务或加载模型。默认计划可在本地 Windows / WSL 查看，不下载、不建 venv、不检测 GPU：
-
-```bash
-cd tasks/qwen3-asr-bw-vllm
-bash prepare.sh --dry-run
-bash run.sh --dry-run
-```
-
-目标原生 Linux x86_64 / Python 3.10 镜像中，确认算力使用安排后，才执行准备：
+canonical [env.sh](tasks/qwen3-asr-bw-vllm/env.sh)、[run.sh](tasks/qwen3-asr-bw-vllm/run.sh) 为默认路径。新 venv 缺失时才准备，已有目录只校验，失败不自动删除或覆盖。`QWEN_ASR_*` 隔离任务身份和预算。原生包/配置源码漂移时拒绝运行。
 
 ```bash
-# 原生解释器；目标目录默认本任务 runtime/audio-venv，必须尚不存在。
-SCNET_BASE_PYTHON=/usr/bin/python3 bash prepare.sh --apply
-# 这是独立一步，只有显式 run 才启动 GPU 服务。
-bash run.sh
-# 在另一终端做检查与请求，然后停止本项目服务：
-bash env_check.sh
-bash smoke.sh --audio /实际短语音.wav
-bash stop.sh
+bash tasks/qwen3-asr-bw-vllm/run.sh --dry-run
+SCNET_BASE_PYTHON=/usr/bin/python bash tasks/qwen3-asr-bw-vllm/run.sh
+bash tasks/qwen3-asr-bw-vllm/smoke.sh
+bash tasks/qwen3-asr-bw-vllm/verify.sh --selfcheck
+bash tasks/qwen3-asr-bw-vllm/bench.sh
+bash tasks/qwen3-asr-bw-vllm/stop.sh
 ```
 
-准备时仅在新建 `--system-site-packages` venv 内以 `--no-deps --require-hashes --only-binary=:all:` 安装缺失的锁定 wheel；不会动态解析或升级原生包。已存在的音频包如版本不符，或原生栈版本不同，将在安装前拒绝。安装后检查包版本与路径、依赖闭包、WAV 解码和重采样，以及兼容插件所需配置源码身份。原始记录写入 venv 的 `asr-prepare-evidence/`；失败目录保留供检查，不自动覆盖、删除或重试。session003 已在另一实例的同一原生栈实际执行新增准备流程并用新 venv 完成服务请求；这不是最终交付镜像的从零验收。
-
-已有历史 venv 可先做 CPU 验证，再显式使用；不要求重新安装：
-
-```bash
-bash prepare.sh --check-existing /root/private_data/venvs/qwen3-asr-audio-001
-export QWEN_ASR_PYTHON_BIN=/root/private_data/venvs/qwen3-asr-audio-001/bin/python
-bash run.sh
-```
-
-自定义新 venv 使用 `prepare.sh --venv /新的绝对目录 --apply`，随后显式设置对应 `QWEN_ASR_PYTHON_BIN`。`run.sh` 实际启动前会再验证该 venv；未准备时 `--dry-run` 只用基础 Python 展开启动参数，并明确提示没有已准备的 Python，不表示服务可启动。
-
-全部模型、端口和预算覆盖变量使用 `QWEN_ASR_*`。默认加载上限 600 秒、总服务上限 900 秒，仅用于短轮诊断；正式长评测需要按已批准预算另设。监督器停止服务不会关闭 Notebook 或停止平台计费，平台关机必须单独完成。2026-10-19 的历史实例已关机，历史 2 卡时额度不构成本轮新开卡授权。
+服务 run ID 为 `1a02b2e4e0c944cabdb195dd54dc8348`；创建 `09:57:35.327930 UTC`，ready `09:59:20.009955 UTC`，终态 **expired**，`10:12:39.030575 UTC` 因900秒预算到期结束，监督器 elapsed903.702秒。见 [终态](evidence/session004/remote-intermediate-001/project/evidence/session004/asr-state-stopped.json)。后续 [stop 输出](evidence/session004/remote-intermediate-001/project/evidence/session004/asr-stop.log) 为“recorded supervisor is no longer running; no process was signaled”，不能改写为该 stop 调用主动终止服务，也不单独证明所有后代/端口已独立清理核验。Notebook 停止计费另查平台终态。
 
 ## 5. Smoke 测试
 
-独立标准库客户端上传本地 WAV 到 `/v1/audio/transcriptions`。默认输入要求单声道、16 kHz、PCM16、时长大于 0 且不超过 30 秒、文件最多 2 MiB；显式 `--long-audio` 开发模式放宽至 120 秒 / 4 MiB，编码要求不变，不自动裁剪或重采样。
+默认固定 WAV 的来源与转换见 [fixture manifest](evidence/session004/remote-intermediate-001/project/fixtures/smoke-session004/manifest.json)。中文 SHA `46dbc998c9d1d48111267c40741dd3200f2e5bcf4075f8c4c97f4451160dce50`，英文 SHA `64e219123047e533c1c1dbb446cb04873ff8c72a2ff20e24ae9d84664d9b455f`。均单声道 PCM16/16kHz；音频按完整文件上传，不发送参考文本、语言或 prompt。
 
-```bash
-bash smoke.sh --audio /实际短语音.wav --dry-run
-bash smoke.sh --audio /实际短语音.wav
-# 仅在本地比较，参考文本不会放进请求。
-bash smoke.sh --audio /实际短语音.wav --expected-text "人工核对的文本"
-# 明确标记长音频开发模式，不能将拼接样本称为自然连续录音。
-bash smoke.sh --audio /已准备的长语音.wav --long-audio
-```
+| 本轮输入 | 时长 | 实际结果 | HTTP 往返 |
+|---|---:|---|---:|
+| [默认中文](evidence/session004/remote-intermediate-001/project/evidence/session004/asr-default-smoke.jsonl) | 4.2039375秒 | 非空14字符；模型身份匹配 | 7.145111秒 |
+| [英文](evidence/session004/remote-intermediate-001/project/evidence/session004/asr-en-smoke.jsonl) | 15.05125秒 | 非空188字符；模型身份匹配 | 1.786333秒 |
 
-multipart 只有 `model`、`file`、`response_format=json`、`temperature=0`，不发送语言、prompt 或参考答案。先确认 `/v1/models`，仅向 loopback 请求，不跟随重定向或重试。JSONL 使用新文件名，拒绝覆盖；日志保存 SHA256 和音频元数据，不保存 WAV payload。非空转写只是接口功能证据，精确文本比较不等于 WER/CER；API 未提供 finish reason，不能据此保证没有截断。
+普通转写路由未返回 finish reason 或 token usage；`raw_text.truncated=false` 只说明日志未裁剪，不证明模型输出无截断。两条 summary 的 `semantic_accuracy_verified=false`，WER/CER 未计算。客户端 SHA 为 `da40fff4081c7873a4d276225d4ef990df9b2d666daf3c1d73ee0796def655f1`；客户端自己的 run ID 与监督器服务 run ID 分开记录。
 
-session003 的三条样本时长为 4.2039375、15.05125、39.260375 秒，均返回非空转写，见[中文](evidence/asr-vllm-smoke-zh-003.jsonl)、[英文](evidence/asr-vllm-smoke-en-003.jsonl)、[拼接长输入](evidence/asr-vllm-smoke-long-003.jsonl)。样本来源及 PCM24/48k→PCM16/16k、拼接过程见[fixture manifest](evidence/asr-fixture-manifest-003.json)。没有人工参考，响应未提供 finish reason，日志未截断不等于已证明模型没有截断。
-
-独立 `scripts/qwen3_asr_stream_smoke.py` 的默认模式只做计划，显式 `--run --log 新文件` 才向 loopback 上传完整 WAV 并读取 SSE。实际中文请求收到 12 个事件、`finish_reason=stop`、`[DONE]` 和 usage（65 prompt + 11 completion），原文保留 `language Chinese<asr_text>` 前缀，见[SSE 原始记录](evidence/asr-vllm-sse-zh-003.jsonl)。这是整文件音频上传后的输出流式，不是分块实时音频输入；自然连续长语音、噪声、多语种和实时输入仍待验证。
+[中文 SSE 原件](evidence/session004/remote-intermediate-001/project/evidence/session004/asr-sse-zh.jsonl) 有12个 JSON事件、`finish_reason=stop`、`[DONE]`、65 prompt + 11 completion = 76 tokens；原始 `language Chinese<asr_text>` 前缀保留，客户端 SHA 为 `3ae83568801ff05787cef6b959d3cfc28b63d3014e04049d8803cb3cd35a7f05`。第一非空 delta0.077767秒、流读取0.421373秒，仅单次开发观测。整文件输入后的输出流式已经验证，实时分块音频输入没有验证。
 
 ## 6. 精度测评
 
-另有纯离线开发工具 `scripts/asr_development_eval.py`，接收严格逐 ID 匹配的 reference/prediction JSONL，默认 identity 规范化，输出原始 WER/CER 与 S/D/I、文件和文本 SHA256；不调用模型、不生成官方 baseline 或 PASS。WER 明确仅按空白分词，不暗中对中文、数字、标点或大小写作处理，CER 保留原文全部 Unicode code point。manifest 默认只验证计划，显式 `--check-audio` 才检查本地短 WAV；格式、CPU 限额、主来源和使用方式见 [离线开发准备说明](docs/asr-offline-readiness.md)。它没有接管 `verify.sh` 或替代赛事评测器。
+正式 WER/CER 仍未执行。需要官方固定音频/reference、语言/规范化/分词、解码、独立 GPU baseline、2% 劣化公式及原版 evaluator/selfcheck。不能把模型返回反作参考答案。历史开发集、session003 的人工拼接39秒结果和纯离线 identity-normalized WER/CER 工具不代替正式材料。
 
-尚缺赛事固定音频清单、参考转写、GPU baseline、WER/CER 规范化、语言策略、解码配置及正式判分入口。发布方成绩和通用 HYGON 评测工具可用于开发参考，不能未经核对就当作本分题官方验收结果。
-
-`verify.sh` 当前返回 2，明确说明 T04 集成待完成，不会误用视觉评测桥。`task.json` 中 `max_drop=0` 是禁用阶段的占位值，不是官方门槛。官方表述需要完整镜像地址和 tag；digest 可作为可复现补充证据，未把它设为额外硬性验收条件，也不把单独认领回执设为开发前置条件。
+当前 `verify.sh` 已启用通用真实官方桥；`--selfcheck` 只执行真实外部 selfcheck，不运行 full eval。缺材料返回2；未知 schema 为 `executed_uninterpreted`，不生成 accuracy PASS。T04 bench 必须显式外部脚本和输出 contract，详见 [桥 CPU 验证](evidence/session004/official-bridge-validation-20261023/validation.json) 与 [字段表](docs/stage004-report-fields.json)。
 
 ## 7. 性能参考
 
-历史两次 HTTP 往返约 5.13 秒、0.82 秒，未预热，缓存和初始化条件不同，不能据此报告吞吐或 RTF。`bench.sh` 目前返回 2，不会将 ASR 送进 T02 图像六档压测。正式音频时长、batch、并发、流式延迟、预热和计分方式仍需完整 T04 方法。
+上述 HTTP/SSE 用时不构成正式 RTF、吞吐或流式延迟成绩；900秒监督器生命周期也不是音频推理耗时。本轮只完成两条短 WAV 和一次中文整文件 SSE，无音频长度×batch/并发矩阵、稳态预热或正式性能判定。
 
-session003 中文、英文和拼接长音频 HTTP 往返分别约 4.889、1.807、4.204 秒；SSE 第一非空 delta 约 0.074 秒、输出流用时约 0.424 秒。它们是单次开发观测，未构成正式延迟、RTF 或吞吐评测。ASR 监督器实际从创建到停止约 168.077 秒；合并 RoboBrain+ASR 开发驱动的 547.572 秒不能全部算作 ASR 推理或卡时。
+T04 音频计量方法尚缺，不能套 T02 图像608请求。未来须同时填写总音频秒数、请求数/完整失败数、预热/轮次、实际输入模式、推理与 HTTP 计时边界及 RTF/吞吐公式。
 
-## 8. 待完成交付
+## 8. 注意事项
 
-- [x] 原始权重、legacy BPE、BF16 加载和两条短 WAV 转写证据。
-- [x] 审核的 CPU wheel 锁、默认纯本地准备计划、显式 prepare + run 入口。
-- [x] 纯离线 development_only WER/CER 工具与短 WAV manifest 计划/检查；不是正式精度结果。
-- [x] 在另一实例同原生栈新建隔离 venv，执行新增准备流程并完成服务请求。
-- [x] 三条发布方派生 WAV（含人工拼接长输入）及完整 WAV SSE 输出验证。
-- [ ] 最终交付镜像的干净环境从零复跑。
-- [ ] 自然连续长语音、噪声、多语种和实时音频输入验证。
-- [ ] 正式 WER/CER、性能原始记录与适用门槛判定。
-- [ ] 保存最终镜像，取得完整 registry/repo:tag，整理依赖锁、报告和代码仓库，核对评审访问权限；当前仓库保持 private。
-- [ ] 核对提交表材料并按用户最终提交安排完成提交。
-
-本目录仍标记 `adaptation_ready=false`、`formal_ready=false` 和 `official_accuracy=false`。准备脚本不会替代缺失的官方数据、baseline 和评测器，也不会自动发布或提交。原始 runtime 快照已逐字节复制为扁平 evidence 文件，来源/目标 SHA256 与核查记录见 [copy provenance](evidence/asr-copy-provenance-003.json)，原件没有修改。仓库更新是否落库与赛事提交状态另行核对，不用本地报告推定提交成功。
+- 本轮功能通过；正式 WER/CER、性能、自然连续长音频、噪声、多语种与实时输入均不能据短 WAV 推断。
+- `expired` 终态、后续 stop 未发送信号、独立进程/端口清理与平台停机分开记载；当前归档不足以把最后两项都标为已核通过。
+- 七个 CPU 包在隔离环境安装不等于替换原生 Torch/vLLM。原始失败和历史003均保留，当前代码更新后的 task SHA 不冒充执行时 SHA。
+- 最终镜像、干净镜像复跑、stage004 commit/访问与报告装配仍需闭合。保留版权范围和上游许可，模板未强制全仓开源。用户手动提交最后表单。
