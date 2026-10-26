@@ -1,0 +1,58 @@
+{
+  "UTC": "2026-10-26T03:43:32.131805+00:00",
+  "run_id": "6cb71782ea6f4e75a3440a2565148982",
+  "source_files": {
+    "benchmark_asr.py": "fa7695aa10e062a600c0b415214370984e0223d4d351ee485944439c205970e1",
+    "evaluate_asr.py": "9664581831f39a49d75737a5c7e1699a64b66c5118be7f1094959cfc326339eb",
+    "prepare_chartqa.py": "09e56bdf182b616a65c9e9ec6bb2c3013857e92061034363cd04331a4fd6ab24",
+    "prepare_librispeech.py": "a6765144326ee565e4d6c782596f9e39aa87e28efed4bf91265940bf5a675f59",
+    "run_asr.sh": "42cdb89b89fbf3fe4c51900db87fa813b6ccaa6f6ed80c44a7f1858679a6280f",
+    "run_asr_experiment.py": "c389cb7b2a8087be89450571082e1a5495888e6aa0054bc7b87d1850b49716c6",
+    "stage_asr_image.py": "6c715e963a557c713e49b840dba814c918400448b2f7113e56c19a7136baa059",
+    "whisper_normalizers/LICENSE": "29c65f1592147454b6e58f0e1a2101fca89f9dddbb51a2b07ebff6bcb6d9f072",
+    "whisper_normalizers/__init__.py": "5bd6fb9c3cb09a061e87e9de283d86bc0f30cd1e70615a4f2e8e17ee86d26f13",
+    "whisper_normalizers/basic.py": "b8cc0624f3b104944c063be33c6d8be8167d9bcd964985a80b2bb293d08652cb",
+    "whisper_normalizers/english.json": "b21ff856a04d2468cd46f394659abf13c726f12aec8cad56c7a325d6a6a03703",
+    "whisper_normalizers/english.py": "85e56c20cf5213e47ad29a98020f3881fe485e82464a20525721b3d944a502a3"
+  },
+  "image_root": "/opt/guoxin-asr009",
+  "dataset_manifest_sha256": "37832ad27f4328bbc5aaf48e65845dd17e942b3f31dcc9ee33867c800fe821d1",
+  "submitted": false,
+  "phases": {
+    "device": 0,
+    "launch": 0,
+    "evaluation": 0,
+    "benchmark": 0,
+    "stop": 0
+  },
+  "service_stopped": true,
+  "wall_seconds": 1007.0873136096634,
+  "ended_utc": "2026-10-26T04:00:19.232165+00:00",
+  "accuracy_result": {
+    "sample_count": 2620,
+    "completed": 2620,
+    "failed_ids": [],
+    "complete": true,
+    "micro_word_error_rate_percent": 1.6387877873536123,
+    "edit_counts": {
+      "substitutions": 656,
+      "deletions": 142,
+      "insertions": 71,
+      "reference_words": 53027
+    },
+    "publisher_baseline_percent": 1.63,
+    "relative_degradation_allowance": 0.02,
+    "limit_percent": 1.6625999999999999,
+    "numeric_comparison_pass": true,
+    "normalization": "OpenAI Whisper EnglishTextNormalizer, exact vendored source hashes in execution manifest",
+    "publisher_normalization_implementation_published": false,
+    "official_acceptance": false,
+    "dataset_scope": "complete LibriSpeech test-clean (2620 utterances)",
+    "publisher_source": "https://huggingface.co/Qwen/Qwen3-ASR-1.7B/blob/7278e1e70fe206f11671096ffdd38061171dd6e5/README.md",
+    "evaluation_wall_seconds": 835.9061825778335,
+    "inference_audio_seconds": 19452.480625000026,
+    "submission_ready": false
+  },
+  "official_acceptance": false,
+  "submission_ready": false
+}

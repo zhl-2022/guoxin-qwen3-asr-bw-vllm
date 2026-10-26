@@ -1,0 +1,24 @@
+{
+  "model": "Qwen3-ASR-1.7B",
+  "track": "T04",
+  "parent_commit": "631de0281c4dab43ed4b4650bcdfdfb5d3b53864",
+  "original_archive_sha256": "18407d4282d6a8d041e05e2efa92eb37bf445e444e634c92dc4c07c7a97f8eff",
+  "publisher_comparison_pass": true,
+  "independent_audit_pass": true,
+  "image_saved": true,
+  "image": "guoxin-publisher-eval-bw009:dtk2604-vllm018-asr-trident-20261026",
+  "image_url": "https://www.scnet.cn/ui/console/index.html#/image-management/detail/2114587646006431746",
+  "new_root_wrappers_GPU_replayed": false,
+  "fresh_saved_image_instance_replay": false,
+  "judge_access_verified": false,
+  "sourcefind_updated_this_revision": false,
+  "official_acceptance": false,
+  "submission_ready": false,
+  "submitted": false,
+  "raw_archives": [
+    {
+      "file": "evidence/session009/session009-asr001-results.zip",
+      "sha256": "cbf58ea35eab6b877f7ff1889afb353c4a2e92da8f502ecba833f55130d14ed6"
+    }
+  ]
+}
