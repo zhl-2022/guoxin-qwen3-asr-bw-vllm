@@ -1,0 +1,36 @@
+{
+  "schema": "technical-delivery010",
+  "UTC": "2026-10-26T21:06:00.598338+00:00",
+  "model": "Qwen3-ASR-1.7B",
+  "track": "T04",
+  "publisher_numeric_comparison_pass": true,
+  "independent_full_result_audit_pass": true,
+  "fresh_image_full_replay_pass": true,
+  "technical_submission_materials_complete": true,
+  "image_id": "2114587646006431746",
+  "fresh_instance": "crdnotebook-2114808632296972290-ac3p4mowhz-24051",
+  "repository_private": true,
+  "reviewer_account_access_verified": false,
+  "official_acceptance": false,
+  "submitted": false,
+  "sourcefind_project_url": "https://developer.sourcefind.cn/codes/ghu_30ebea88e/guoxin-qwen3-asr-bw-vllm-session010",
+  "input_archive_sha256": "99ee93e0768198ddfcf39958e471da385274a8304ce7d75351f69ba038c52076",
+  "new_result_archive_sha256": "3022ed69ff7d99c638cdc4f3d0eff36f8b2ba29b3f61e74fc29384b6200dfce6",
+  "performance_reproduction": [
+    {
+      "concurrency": 1,
+      "primary_round": 2,
+      "previous": 6.334282569817688,
+      "replay": 7.002333755742311,
+      "change_percent": 10.546595901923105
+    },
+    {
+      "concurrency": 4,
+      "primary_round": 2,
+      "previous": 24.41238458399764,
+      "replay": 25.275132979559807,
+      "change_percent": 3.534060315138987
+    }
+  ],
+  "covered_dataset": "完整 LibriSpeech test-clean 2,620 条"
+}

@@ -1,0 +1,8 @@
+{
+  "independent_sse_audit_pass": true,
+  "events": 13,
+  "done_marker": true,
+  "finish_reason": "stop",
+  "original_audio_hash_verified": true,
+  "output_only_streaming": true
+}
