@@ -1,6 +1,7 @@
 {
-  "schema": "delivery010",
-  "UTC": "2026-10-26T21:12:44.008627+00:00",
+  "schema": "delivery037",
+  "UTC": "2026-10-28T15:42:55.194974+00:00",
+  "scope": "Exact current Git files except this manifest; prior manifests retained under provenance",
   "files": [
     {
       "path": ".gitattributes",
@@ -11,6 +12,11 @@
       "path": ".gitignore",
       "bytes": 143,
       "sha256": "c31d74ecb55ec74fb93a2a8339e65c06b15739ce379aada5a80a806ae80beb83"
+    },
+    {
+      "path": "CURRENT_SUBMISSION_STATE037.json",
+      "bytes": 1756,
+      "sha256": "e47535460ec549b1b26e57556316500d68041f325554c4d6ba60a6bb8cb6d217"
     },
     {
       "path": "DELIVERY_STATUS_010.json",
@@ -24,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 5611,
-      "sha256": "55fd3e38749a4881b9e0fe8869569d00c257a0a9555984fcd8d2474525a90016"
+      "bytes": 8358,
+      "sha256": "109a417a6019c7df1448e54700eb4e52f40d4e87bada952b494177f848150ebe"
     },
     {
       "path": "README_origin.md",
@@ -41,6 +47,41 @@
       "path": "bench.sh",
       "bytes": 327,
       "sha256": "bf8476c36c0589649baeb21cdde27c4d53307a1d6fec343427c7a292a2ec5cc8"
+    },
+    {
+      "path": "bench/c1-round1.jsonl",
+      "bytes": 30780,
+      "sha256": "27934d2604d4c2a2ddf5c03a68eeb3eae585256db1ba10611bdc6dff7ad9fa24"
+    },
+    {
+      "path": "bench/c1-round2.jsonl",
+      "bytes": 30779,
+      "sha256": "d033768e150693fc2232627c17213a322a671f6d2f1ac1ec82588045208661a4"
+    },
+    {
+      "path": "bench/c4-round1.jsonl",
+      "bytes": 30782,
+      "sha256": "dd8c18f9345a0b6ee79d09fdef9f0fbd9a0e8bf7ee955f2891ab913dc6290065"
+    },
+    {
+      "path": "bench/c4-round2.jsonl",
+      "bytes": 30781,
+      "sha256": "25d270f25b2d3e86c8383b9ee3f9030d571e48ad02a0d75cc06bde03b3733d3d"
+    },
+    {
+      "path": "bench/protocol.json",
+      "bytes": 931,
+      "sha256": "4b41c2fdf03dfab7e2afdcd73dbcd23feb86f05a71861a47a49a579a9beb6e28"
+    },
+    {
+      "path": "bench/summary.json",
+      "bytes": 2700,
+      "sha256": "9ca621a4fa1971afbcb79191a26ee6a6245809589524f53183f369657e571aae"
+    },
+    {
+      "path": "bench/warmup.json",
+      "bytes": 1495,
+      "sha256": "22f05f25245459e68e85d55d1a1499d995f38796e71f9d53aea4872a3675138c"
     },
     {
       "path": "bench009/summary.json",
@@ -154,8 +195,8 @@
     },
     {
       "path": "env.log",
-      "bytes": 259,
-      "sha256": "30be44a5ca8d1d084cc95e61759444dfe85740df21c51174f18f189137af6f26"
+      "bytes": 142,
+      "sha256": "4a42191da0c0036d001863ebc275f3860c9616f4a61b5ff87fc71aeea2fda30c"
     },
     {
       "path": "env.sh",
@@ -326,6 +367,16 @@
       "path": "evidence/community-metadata-003.json",
       "bytes": 20458,
       "sha256": "88b5293c3f67007c27e21366c2241a609d2c692fb020303312f3ab3967f4909a"
+    },
+    {
+      "path": "evidence/delivery037/live-official-rules-observation.json",
+      "bytes": 2111,
+      "sha256": "bbdb3888dfe68c692b9160cbd8ffdb4c41411f91e730486870511fa12f365377"
+    },
+    {
+      "path": "evidence/delivery037/package-structure-audit.json",
+      "bytes": 13799,
+      "sha256": "9ccf7b99021e52ad04e0240c534e9d7fee55b347edd58b570d063269dcaa0428"
     },
     {
       "path": "evidence/final-delivery-closure-003.json",
@@ -4258,6 +4309,11 @@
       "sha256": "1d03c2e3020a779122fd4e7ea69c08ebcf37e48dd0ca619ed1c6f6563e968a26"
     },
     {
+      "path": "launch.log",
+      "bytes": 1064,
+      "sha256": "2996d58062ed1de4ad2ab0a7496552d387b57d71ff04b35264d631a03ea08b17"
+    },
+    {
       "path": "model.properties",
       "bytes": 421,
       "sha256": "7bc280a885618d1b0fd2146d52e29d182f5581d7de17054872fdd5ffd07da8b3"
@@ -4276,6 +4332,31 @@
       "path": "provenance/frozen009/publisher-delivery-manifest009.json",
       "bytes": 233686,
       "sha256": "dff8c50385c12c834d230adf3dd9baa80866ad6e49894b3a4f4b82ba5cd7e783"
+    },
+    {
+      "path": "provenance/submission-before037/README-pre-final-index037.md",
+      "bytes": 6903,
+      "sha256": "7848073efb69180fecdebae5819287e46632bf6bcf42bb52cbe03808c8af7522"
+    },
+    {
+      "path": "provenance/submission-before037/README.md",
+      "bytes": 5611,
+      "sha256": "55fd3e38749a4881b9e0fe8869569d00c257a0a9555984fcd8d2474525a90016"
+    },
+    {
+      "path": "provenance/submission-before037/env.log",
+      "bytes": 259,
+      "sha256": "30be44a5ca8d1d084cc95e61759444dfe85740df21c51174f18f189137af6f26"
+    },
+    {
+      "path": "provenance/submission-before037/publisher-delivery-manifest010.json",
+      "bytes": 229543,
+      "sha256": "d97f0e8efa70a86270504ba234c70f1da3771d5a2b14ad4d82c9b753d1490bd4"
+    },
+    {
+      "path": "provenance/submission-before037/verify_result.json",
+      "bytes": 945,
+      "sha256": "35be570508ff673f425fb590368abe17137b8adbf4db434f1877907c5b413502"
     },
     {
       "path": "pyproject.toml",
@@ -4618,6 +4699,11 @@
       "sha256": "ba6a94283fa63418948c466eac7fc8949a56cf244eb6f9c3be8dcd78ef673dd1"
     },
     {
+      "path": "smoke.log",
+      "bytes": 2201,
+      "sha256": "09923be95b2d56966c8cb945fdaf95dde3493d71db852091411b66858fc2779a"
+    },
+    {
       "path": "smoke.sh",
       "bytes": 173,
       "sha256": "9efbc156ec095a3b84c1cffd30af6bd6534db45674ae5e7fdc80c501ef10259c"
@@ -4646,6 +4732,11 @@
       "path": "src/guoxin/runtime.py",
       "bytes": 4579,
       "sha256": "79006a5c295e1b829c330f25ee23e57def0faaae5be4a8c41ac484bd45b497f6"
+    },
+    {
+      "path": "stop.log",
+      "bytes": 67,
+      "sha256": "f876dd5029a62e13517e28fa6e32b074ea9cf830a09182054467451c7c866cb1"
     },
     {
       "path": "stop.sh",
@@ -5435,12 +5526,14 @@
     {
       "path": "verify_result.json",
       "bytes": 945,
-      "sha256": "35be570508ff673f425fb590368abe17137b8adbf4db434f1877907c5b413502"
+      "sha256": "05635e8b8ec96389edbf69a8b7c283d87f68909a9274d6fca23be0c79e1419dc"
     },
     {
       "path": "国芯国模黑客松-技术报告模板.md",
       "bytes": 14427,
       "sha256": "b151143f6fa38c87e301cfc9335a94d17fcd49c7113a53fe05f89c04b45f349f"
     }
-  ]
+  ],
+  "model_weights_in_code_package": false,
+  "submitted": false
 }
