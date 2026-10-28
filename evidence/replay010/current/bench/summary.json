@@ -1,0 +1,90 @@
+{
+  "protocol": {
+    "UTC": "2026-10-26T20:24:41.101992+00:00",
+    "selected_ids": [
+      "4992-23283-0015",
+      "2830-3980-0065",
+      "7127-75947-0029",
+      "4970-29095-0030",
+      "3575-170457-0027",
+      "908-31957-0016",
+      "3575-170457-0032",
+      "5142-33396-0012",
+      "2961-960-0004",
+      "8455-210777-0043",
+      "5142-33396-0033",
+      "3729-6852-0044",
+      "4446-2275-0021",
+      "6930-75918-0005",
+      "5683-32865-0006",
+      "237-134493-0009",
+      "908-31957-0015",
+      "7176-88083-0005",
+      "1284-134647-0001",
+      "8555-284449-0016",
+      "908-31957-0003",
+      "6829-68771-0030",
+      "61-70970-0005",
+      "3729-6852-0021"
+    ],
+    "dataset_sha256": "37832ad27f4328bbc5aaf48e65845dd17e942b3f31dcc9ee33867c800fe821d1",
+    "source_sha256": "fa7695aa10e062a600c0b415214370984e0223d4d351ee485944439c205970e1",
+    "method": "fixed 24 complete utterances, c1/c4, two rounds, same greedy 1024 settings; warmup excluded",
+    "official_acceptance": false
+  },
+  "rounds": [
+    {
+      "concurrency": 1,
+      "round": 1,
+      "requests": 24,
+      "success": 24,
+      "failed": 0,
+      "wall_seconds": 21.42025165166706,
+      "audio_seconds_successful": 147.09,
+      "real_time_factor_inverse": 6.866866103720707,
+      "request_per_second": 1.1204350159038476,
+      "latency_p50_seconds": 0.8737647351808846,
+      "latency_p95_nearest_rank_seconds": 1.5905812000855803
+    },
+    {
+      "concurrency": 1,
+      "round": 2,
+      "requests": 24,
+      "success": 24,
+      "failed": 0,
+      "wall_seconds": 21.00585392396897,
+      "audio_seconds_successful": 147.09,
+      "real_time_factor_inverse": 7.002333755742311,
+      "request_per_second": 1.1425386507431876,
+      "latency_p50_seconds": 0.8657029045280069,
+      "latency_p95_nearest_rank_seconds": 1.5425956770777702
+    },
+    {
+      "concurrency": 4,
+      "round": 1,
+      "requests": 24,
+      "success": 24,
+      "failed": 0,
+      "wall_seconds": 5.803966284263879,
+      "audio_seconds_successful": 147.09,
+      "real_time_factor_inverse": 25.343014207163943,
+      "request_per_second": 4.135103276714492,
+      "latency_p50_seconds": 0.888057031435892,
+      "latency_p95_nearest_rank_seconds": 1.5644198185764253
+    },
+    {
+      "concurrency": 4,
+      "round": 2,
+      "requests": 24,
+      "success": 24,
+      "failed": 0,
+      "wall_seconds": 5.819553951267153,
+      "audio_seconds_successful": 147.09,
+      "real_time_factor_inverse": 25.275132979559807,
+      "request_per_second": 4.124027408453569,
+      "latency_p50_seconds": 0.8895901150535792,
+      "latency_p95_nearest_rank_seconds": 1.5731362248770893
+    }
+  ],
+  "all_successful": true
+}

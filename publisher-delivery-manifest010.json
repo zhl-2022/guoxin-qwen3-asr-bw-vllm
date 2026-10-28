@@ -1,6 +1,6 @@
 {
   "schema": "delivery037",
-  "UTC": "2026-10-28T15:42:55.194974+00:00",
+  "UTC": "2026-10-28T15:47:43.063697+00:00",
   "scope": "Exact current Git files except this manifest; prior manifests retained under provenance",
   "files": [
     {
@@ -667,6 +667,71 @@
       "path": "evidence/replay010/asr_stream010.py",
       "bytes": 2377,
       "sha256": "9a5612425634bb6b868eec9eb17e61a4ca0d6bb85887b79c5d11bec6a30a59a9"
+    },
+    {
+      "path": "evidence/replay010/current/INDEX037.json",
+      "bytes": 2219,
+      "sha256": "6a02e87bc3239891b765ef3c219e3aad981fcb1da1efbc9775f5dd6b0f422b7c"
+    },
+    {
+      "path": "evidence/replay010/current/bench/c1-round1.jsonl",
+      "bytes": 30780,
+      "sha256": "27934d2604d4c2a2ddf5c03a68eeb3eae585256db1ba10611bdc6dff7ad9fa24"
+    },
+    {
+      "path": "evidence/replay010/current/bench/c1-round2.jsonl",
+      "bytes": 30779,
+      "sha256": "d033768e150693fc2232627c17213a322a671f6d2f1ac1ec82588045208661a4"
+    },
+    {
+      "path": "evidence/replay010/current/bench/c4-round1.jsonl",
+      "bytes": 30782,
+      "sha256": "dd8c18f9345a0b6ee79d09fdef9f0fbd9a0e8bf7ee955f2891ab913dc6290065"
+    },
+    {
+      "path": "evidence/replay010/current/bench/c4-round2.jsonl",
+      "bytes": 30781,
+      "sha256": "25d270f25b2d3e86c8383b9ee3f9030d571e48ad02a0d75cc06bde03b3733d3d"
+    },
+    {
+      "path": "evidence/replay010/current/bench/protocol.json",
+      "bytes": 931,
+      "sha256": "4b41c2fdf03dfab7e2afdcd73dbcd23feb86f05a71861a47a49a579a9beb6e28"
+    },
+    {
+      "path": "evidence/replay010/current/bench/summary.json",
+      "bytes": 2700,
+      "sha256": "9ca621a4fa1971afbcb79191a26ee6a6245809589524f53183f369657e571aae"
+    },
+    {
+      "path": "evidence/replay010/current/bench/warmup.json",
+      "bytes": 1495,
+      "sha256": "22f05f25245459e68e85d55d1a1499d995f38796e71f9d53aea4872a3675138c"
+    },
+    {
+      "path": "evidence/replay010/current/env.log",
+      "bytes": 142,
+      "sha256": "4a42191da0c0036d001863ebc275f3860c9616f4a61b5ff87fc71aeea2fda30c"
+    },
+    {
+      "path": "evidence/replay010/current/launch.log",
+      "bytes": 1064,
+      "sha256": "2996d58062ed1de4ad2ab0a7496552d387b57d71ff04b35264d631a03ea08b17"
+    },
+    {
+      "path": "evidence/replay010/current/smoke.log",
+      "bytes": 2201,
+      "sha256": "09923be95b2d56966c8cb945fdaf95dde3493d71db852091411b66858fc2779a"
+    },
+    {
+      "path": "evidence/replay010/current/stop.log",
+      "bytes": 67,
+      "sha256": "f876dd5029a62e13517e28fa6e32b074ea9cf830a09182054467451c7c866cb1"
+    },
+    {
+      "path": "evidence/replay010/current/verify_result.json",
+      "bytes": 945,
+      "sha256": "05635e8b8ec96389edbf69a8b7c283d87f68909a9274d6fca23be0c79e1419dc"
     },
     {
       "path": "evidence/replay010/download-receipt.json",
@@ -4347,6 +4412,11 @@
       "path": "provenance/submission-before037/env.log",
       "bytes": 259,
       "sha256": "30be44a5ca8d1d084cc95e61759444dfe85740df21c51174f18f189137af6f26"
+    },
+    {
+      "path": "provenance/submission-before037/publisher-delivery-manifest-first037.json",
+      "bytes": 238240,
+      "sha256": "5f80cf1d6fc7969b891ff4467b82de34bcd8c0181258c1437ce06d1d71162bb1"
     },
     {
       "path": "provenance/submission-before037/publisher-delivery-manifest010.json",

@@ -1,0 +1,52 @@
+{
+  "id": "4992-23283-0015",
+  "audio_sha256": "f6a45e087cc2bd982ada9fcdac823ccc6c0190bde79e711d819626dd168ff205",
+  "duration_seconds": 3.675,
+  "request_sha256": "c24f21011dfdc127f3c6fc6ea1ccae8d1607585084132df47e492b6a1de9cedf",
+  "request_settings": {
+    "temperature": 0,
+    "max_tokens": 1024,
+    "language": null
+  },
+  "started_utc": "2026-10-26T20:24:41.294177+00:00",
+  "status": "ok",
+  "language": "English",
+  "prediction": "Is she not afraid that I will thwart her inclinations?",
+  "raw_response": {
+    "id": "chatcmpl-ae5243a272146283",
+    "object": "chat.completion",
+    "created": 1793046281,
+    "model": "qwen3-asr-1.7b",
+    "choices": [
+      {
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "language English<asr_text>Is she not afraid that I will thwart her inclinations?",
+          "refusal": null,
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [],
+          "reasoning": null
+        },
+        "logprobs": null,
+        "finish_reason": "stop",
+        "stop_reason": null,
+        "token_ids": null
+      }
+    ],
+    "service_tier": null,
+    "system_fingerprint": null,
+    "usage": {
+      "prompt_tokens": 63,
+      "total_tokens": 79,
+      "completion_tokens": 16,
+      "prompt_tokens_details": null
+    },
+    "prompt_logprobs": null,
+    "prompt_token_ids": null,
+    "kv_transfer_params": null
+  },
+  "wall_seconds": 0.6411587041802704
+}
