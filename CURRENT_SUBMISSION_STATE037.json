@@ -1,0 +1,33 @@
+{
+  "updated_utc": "2026-10-28T15:24:28.106337+00:00",
+  "model": "asr",
+  "source_parent_commit": "7700bcdedec8504208491de080ab450848b5516d",
+  "branch": "codex/submission-ready037-final",
+  "material_revision_prepared": true,
+  "material_changes": {
+    "env.log": {
+      "old_sha256": "30be44a5ca8d1d084cc95e61759444dfe85740df21c51174f18f189137af6f26",
+      "new_sha256": "4a42191da0c0036d001863ebc275f3860c9616f4a61b5ff87fc71aeea2fda30c"
+    },
+    "verify_result.json": {
+      "old_sha256": "35be570508ff673f425fb590368abe17137b8adbf4db434f1877907c5b413502",
+      "new_sha256": "05635e8b8ec96389edbf69a8b7c283d87f68909a9274d6fca23be0c79e1419dc"
+    },
+    "README.md": {
+      "old_sha256": "55fd3e38749a4881b9e0fe8869569d00c257a0a9555984fcd8d2474525a90016",
+      "new_sha256": "7848073efb69180fecdebae5819287e46632bf6bcf42bb52cbe03808c8af7522"
+    }
+  },
+  "all_prior_tracked_paths_retained": true,
+  "all_prior_changed_files_preserved_byte_for_byte": true,
+  "all_existing_Python_and_shell_bytes_unchanged": true,
+  "SourceFind_project_url": "https://developer.sourcefind.cn/codes/ghu_30ebea88e/guoxin-qwen3-asr-bw-vllm-session010",
+  "image_id": "2114587646006431746",
+  "image_url": "https://www.scnet.cn/ui/console/index.html?#/image-management/detail/2114587646006431746",
+  "image_tag": "dtk2604-vllm018-asr-trident-20261026",
+  "new_SourceFind_revision_verified": false,
+  "reviewer_access_method_closed": false,
+  "submission_ready": false,
+  "submitted": false,
+  "new_GPU_model_requests_in_material_assembly": 0
+}

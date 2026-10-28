@@ -6,8 +6,8 @@
   "micro_word_error_rate_percent": 1.6387877873536123,
   "edit_counts": {
     "substitutions": 656,
-    "deletions": 142,
-    "insertions": 71,
+    "deletions": 144,
+    "insertions": 69,
     "reference_words": 53027
   },
   "publisher_baseline_percent": 1.63,
@@ -19,7 +19,7 @@
   "official_acceptance": false,
   "dataset_scope": "complete LibriSpeech test-clean (2620 utterances)",
   "publisher_source": "https://huggingface.co/Qwen/Qwen3-ASR-1.7B/blob/7278e1e70fe206f11671096ffdd38061171dd6e5/README.md",
-  "evaluation_wall_seconds": 835.9061825778335,
+  "evaluation_wall_seconds": 790.9817192447372,
   "inference_audio_seconds": 19452.480625000026,
   "submission_ready": false
 }
